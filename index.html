@@ -1,1 +1,71 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ricarica Jeep Avenger</title>
+  <style>
+    body{font-family:Arial,sans-serif;margin:0;background:#f4f6f8;color:#18212f}
+    main{max-width:620px;margin:auto;padding:22px}
+    h1{font-size:28px;margin:8px 0 4px}
+    p{color:#596579;margin-top:0}
+    .box{background:white;border:1px solid #d9e0e8;border-radius:10px;padding:18px;margin:14px 0;box-shadow:0 2px 10px #0001}
+    label{display:block;font-weight:bold;margin-top:12px}
+    input{width:100%;box-sizing:border-box;font-size:20px;padding:12px;border:1px solid #b9c3cf;border-radius:8px;margin-top:6px}
+    button{width:100%;font-size:20px;font-weight:bold;padding:14px;margin-top:18px;border:0;border-radius:8px;background:#166534;color:white}
+    .result{font-size:19px;line-height:1.45}
+    .big{font-size:30px;font-weight:bold;color:#166534}
+    small{color:#68758a}
+  </style>
+</head>
+<body>
+<main>
+  <h1>Ricarica Jeep Avenger</h1>
+  <p>Calcolo semplice per sapere quanti kWh impostare alla colonnina o al caricatore.</p>
 
+  <div class="box">
+    <label>Batteria attuale (%)</label>
+    <input id="attuale" type="number" value="30" min="0" max="100">
+
+    <label>Batteria desiderata (%)</label>
+    <input id="target" type="number" value="80" min="0" max="100">
+
+    <label>Prezzo energia (€/kWh)</label>
+    <input id="prezzo" type="number" value="0.45" step="0.01" min="0">
+
+    <label>Potenza ricarica (kW)</label>
+    <input id="potenza" type="number" value="4" step="0.1" min="0.1">
+
+    <button onclick="calcola()">Calcola</button>
+  </div>
+
+  <div class="box result" id="risultato"></div>
+</main>
+
+<script>
+function calcola(){
+  const batteria=54;
+  const efficienza=0.90;
+  const attuale=Number(document.getElementById('attuale').value);
+  const target=Number(document.getElementById('target').value);
+  const prezzo=Number(document.getElementById('prezzo').value);
+  const potenza=Number(document.getElementById('potenza').value);
+  const diff=Math.max(0,target-attuale);
+  const kwhBatteria=batteria*diff/100;
+  const kwhDaImpostare=kwhBatteria/efficienza;
+  const costo=kwhDaImpostare*prezzo;
+  const ore=kwhDaImpostare/potenza;
+  const h=Math.floor(ore);
+  const m=Math.round((ore-h)*60);
+  document.getElementById('risultato').innerHTML=
+    '<div>Da impostare:</div>'+
+    '<div class="big">'+kwhDaImpostare.toFixed(1)+' kWh</div>'+
+    '<br>Costo stimato: <b>€ '+costo.toFixed(2)+'</b>'+
+    '<br>Tempo stimato: <b>'+h+' h '+m+' min</b>'+
+    '<br>Energia che entra in batteria: <b>'+kwhBatteria.toFixed(1)+' kWh</b>'+
+    '<br><br><small>Calcolo su batteria Jeep Avenger 54 kWh ed efficienza ricarica 90%.</small>';
+}
+calcola();
+</script>
+</body>
+</html>
