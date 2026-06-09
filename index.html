@@ -3,53 +3,150 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ricarica Jeep Avenger</title>
+  <meta name="theme-color" content="#0f7a4d">
+  <title>Ricarica Auto Elettrica</title>
+  <link rel="icon" href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"%3E%3Crect width="128" height="128" rx="26" fill="%230f7a4d"/%3E%3Cpath d="M29 79h70l-7-25c-2-7-7-11-15-11H51c-8 0-13 4-15 11l-7 25z" fill="white"/%3E%3Ccircle cx="45" cy="82" r="8" fill="%2318212f"/%3E%3Ccircle cx="83" cy="82" r="8" fill="%2318212f"/%3E%3Cpath d="M61 25h17L67 53h17L51 103l11-37H47z" fill="%23ffd43b"/%3E%3C/svg%3E'>
+  <link rel="apple-touch-icon" href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180"%3E%3Crect width="180" height="180" rx="38" fill="%230f7a4d"/%3E%3Cpath d="M36 111h108l-11-38c-3-10-11-16-23-16H70c-12 0-20 6-23 16L36 111z" fill="white"/%3E%3Ccircle cx="61" cy="116" r="12" fill="%2318212f"/%3E%3Ccircle cx="119" cy="116" r="12" fill="%2318212f"/%3E%3Cpath d="M86 30h24L94 76h25l-49 74 16-54H64z" fill="%23ffd43b"/%3E%3C/svg%3E'>
   <style>
-    body{font-family:Arial,sans-serif;margin:0;background:#f4f6f8;color:#18212f}
-    main{max-width:620px;margin:auto;padding:22px}
-    h1{font-size:28px;margin:8px 0 4px}
-    p{color:#596579;margin-top:0}
-    .box{background:white;border:1px solid #d9e0e8;border-radius:10px;padding:18px;margin:14px 0;box-shadow:0 2px 10px #0001}
-    label{display:block;font-weight:bold;margin-top:12px}
-    input{width:100%;box-sizing:border-box;font-size:20px;padding:12px;border:1px solid #b9c3cf;border-radius:8px;margin-top:6px}
-    button{width:100%;font-size:20px;font-weight:bold;padding:14px;margin-top:18px;border:0;border-radius:8px;background:#166534;color:white}
-    .result{font-size:19px;line-height:1.45}
-    .big{font-size:30px;font-weight:bold;color:#166534}
-    small{color:#68758a}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,sans-serif;background:#eef3f1;color:#18212f}
+    main{max-width:680px;margin:auto;padding:18px}
+    .top{display:flex;align-items:center;gap:12px;margin:4px 0 16px}
+    .logo{width:54px;height:54px;border-radius:14px;background:#0f7a4d;display:grid;place-items:center;box-shadow:0 4px 14px #0002;flex:0 0 auto}
+    .logo svg{width:40px;height:40px}
+    h1{font-size:27px;margin:0;line-height:1.1}
+    .subtitle{font-size:15px;color:#596579;margin:4px 0 0}
+    .box{background:white;border:1px solid #d8e1dc;border-radius:10px;padding:16px;margin:13px 0;box-shadow:0 2px 10px #00000012}
+    label{display:block;font-weight:bold;margin:12px 0 6px;font-size:15px}
+    input,select{width:100%;font-size:20px;padding:12px;border:1px solid #b7c5bf;border-radius:8px;background:white;color:#18212f}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    button{width:100%;font-size:20px;font-weight:bold;padding:14px;margin-top:18px;border:0;border-radius:8px;background:#0f7a4d;color:white}
+    button:active{transform:scale(.99)}
+    .result{font-size:18px;line-height:1.45}
+    .big{font-size:32px;font-weight:bold;color:#0f7a4d;margin:4px 0 10px}
+    .muted{color:#68758a;font-size:14px}
+    .row{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #edf1ef;padding:10px 0}
+    .row:first-child{border-top:0}
+    .row b{text-align:right}
+    .warning{display:none;margin-top:10px;padding:10px;border-radius:8px;background:#fff4d6;color:#684d00;font-size:15px}
+    @media(max-width:520px){
+      main{padding:14px}
+      h1{font-size:24px}
+      .grid{grid-template-columns:1fr}
+      input,select{font-size:19px}
+      .big{font-size:30px}
+    }
   </style>
 </head>
 <body>
 <main>
-  <h1>Ricarica Jeep Avenger</h1>
-  <p>Calcolo semplice per sapere quanti kWh impostare alla colonnina o al caricatore.</p>
+  <div class="top">
+    <div class="logo" aria-hidden="true">
+      <svg viewBox="0 0 128 128">
+        <path d="M22 78h84l-8-28c-3-8-9-13-19-13H49c-10 0-16 5-19 13l-8 28z" fill="white"/>
+        <circle cx="43" cy="83" r="9" fill="#18212f"/>
+        <circle cx="85" cy="83" r="9" fill="#18212f"/>
+        <path d="M61 21h20L68 55h21l-40 58 13-42H45z" fill="#ffd43b"/>
+      </svg>
+    </div>
+    <div>
+      <h1>Ricarica auto elettrica</h1>
+      <p class="subtitle">Calcola quanti kWh impostare alla colonnina o al caricatore.</p>
+    </div>
+  </div>
 
   <div class="box">
-    <label>Batteria attuale (%)</label>
-    <input id="attuale" type="number" value="30" min="0" max="100">
+    <label for="modello">Modello auto</label>
+    <select id="modello" onchange="scegliModello()">
+      <option value="54">Jeep Avenger - 54 kWh</option>
+      <option value="42">Fiat 500e - 42 kWh</option>
+      <option value="54">Fiat 600e - 54 kWh</option>
+      <option value="44">Fiat Grande Panda elettrica - 44 kWh</option>
+      <option value="71.4">Toyota bZ4X - 71,4 kWh</option>
+      <option value="51">Peugeot e-208 - 51 kWh</option>
+      <option value="52">Renault Zoe - 52 kWh</option>
+      <option value="60">Tesla Model 3 RWD - 60 kWh</option>
+      <option value="27.4">Dacia Spring - 27,4 kWh</option>
+      <option value="custom">Altro / personalizzata</option>
+    </select>
 
-    <label>Batteria desiderata (%)</label>
-    <input id="target" type="number" value="80" min="0" max="100">
+    <label for="batteria">Capacita batteria (kWh)</label>
+    <input id="batteria" type="number" value="54" min="1" step="0.1">
 
-    <label>Prezzo energia (€/kWh)</label>
-    <input id="prezzo" type="number" value="0.45" step="0.01" min="0">
+    <div class="grid">
+      <div>
+        <label for="attuale">Batteria attuale (%)</label>
+        <input id="attuale" type="number" value="30" min="0" max="100">
+      </div>
+      <div>
+        <label for="target">Batteria desiderata (%)</label>
+        <input id="target" type="number" value="80" min="0" max="100">
+      </div>
+    </div>
 
-    <label>Potenza ricarica (kW)</label>
-    <input id="potenza" type="number" value="4" step="0.1" min="0.1">
+    <div class="grid">
+      <div>
+        <label for="prezzo">Prezzo energia (euro/kWh)</label>
+        <input id="prezzo" type="number" value="0.45" step="0.01" min="0">
+      </div>
+      <div>
+        <label for="potenza">Potenza ricarica (kW)</label>
+        <input id="potenza" type="number" value="4" step="0.1" min="0.1">
+      </div>
+    </div>
+
+    <label for="efficienza">Efficienza ricarica (%)</label>
+    <input id="efficienza" type="number" value="90" min="50" max="100" step="1">
 
     <button onclick="calcola()">Calcola</button>
+    <div class="warning" id="avviso"></div>
   </div>
 
   <div class="box result" id="risultato"></div>
 </main>
 
 <script>
+function numero(id){
+  return Number(document.getElementById(id).value);
+}
+
+function scegliModello(){
+  const valore=document.getElementById('modello').value;
+  const batteria=document.getElementById('batteria');
+  if(valore!=='custom'){
+    batteria.value=valore;
+  }
+  calcola();
+}
+
+function euro(valore){
+  return valore.toFixed(2).replace('.',',');
+}
+
+function decimale(valore){
+  return valore.toFixed(1).replace('.',',');
+}
+
 function calcola(){
-  const batteria=54;
-  const efficienza=0.90;
-  const attuale=Number(document.getElementById('attuale').value);
-  const target=Number(document.getElementById('target').value);
-  const prezzo=Number(document.getElementById('prezzo').value);
-  const potenza=Number(document.getElementById('potenza').value);
+  const batteria=numero('batteria');
+  const attuale=numero('attuale');
+  const target=numero('target');
+  const prezzo=numero('prezzo');
+  const potenza=numero('potenza');
+  const efficienza=numero('efficienza')/100;
+  const avviso=document.getElementById('avviso');
+  avviso.style.display='none';
+
+  if(!batteria || batteria<=0 || !potenza || potenza<=0 || !efficienza || efficienza<=0){
+    document.getElementById('risultato').innerHTML='<b>Controlla i numeri inseriti.</b>';
+    return;
+  }
+
+  if(target<attuale){
+    avviso.textContent='La percentuale desiderata e inferiore a quella attuale: non serve ricaricare.';
+    avviso.style.display='block';
+  }
+
   const diff=Math.max(0,target-attuale);
   const kwhBatteria=batteria*diff/100;
   const kwhDaImpostare=kwhBatteria/efficienza;
@@ -57,14 +154,21 @@ function calcola(){
   const ore=kwhDaImpostare/potenza;
   const h=Math.floor(ore);
   const m=Math.round((ore-h)*60);
+
   document.getElementById('risultato').innerHTML=
     '<div>Da impostare:</div>'+
-    '<div class="big">'+kwhDaImpostare.toFixed(1)+' kWh</div>'+
-    '<br>Costo stimato: <b>€ '+costo.toFixed(2)+'</b>'+
-    '<br>Tempo stimato: <b>'+h+' h '+m+' min</b>'+
-    '<br>Energia che entra in batteria: <b>'+kwhBatteria.toFixed(1)+' kWh</b>'+
-    '<br><br><small>Calcolo su batteria Jeep Avenger 54 kWh ed efficienza ricarica 90%.</small>';
+    '<div class="big">'+decimale(kwhDaImpostare)+' kWh</div>'+
+    '<div class="row"><span>Costo stimato</span><b>euro '+euro(costo)+'</b></div>'+
+    '<div class="row"><span>Tempo stimato</span><b>'+h+' h '+m+' min</b></div>'+
+    '<div class="row"><span>Energia in batteria</span><b>'+decimale(kwhBatteria)+' kWh</b></div>'+
+    '<div class="row"><span>Batteria usata nel calcolo</span><b>'+decimale(batteria)+' kWh</b></div>'+
+    '<p class="muted">I modelli predefiniti sono scorciatoie: se il tuo allestimento ha una batteria diversa, correggi il campo kWh.</p>';
 }
+
+document.querySelectorAll('input').forEach(function(el){
+  el.addEventListener('input',calcola);
+});
+
 calcola();
 </script>
 </body>
