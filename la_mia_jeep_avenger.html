@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>La mia Jeep Avenger</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      background: #f6f6f6;
+      color: #222;
+    }
+    .app {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    h1 {
+      font-size: 28px;
+      margin: 8px 0 4px;
+    }
+    .subtitle {
+      color: #666;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-weight: 700;
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 22px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #bbb;
+    }
+    button {
+      width: 100%;
+      font-size: 22px;
+      font-weight: 800;
+      padding: 16px;
+      margin-top: 18px;
+      border: 0;
+      border-radius: 14px;
+      background: #ffd400;
+      color: #111;
+    }
+    .result {
+      font-size: 20px;
+      line-height: 1.45;
+    }
+    .big {
+      font-size: 26px;
+      font-weight: 900;
+    }
+    .note {
+      color: #666;
+      font-size: 15px;
+    }
+    .ok {
+      color: #116611;
+      font-weight: 800;
+    }
+    .warn {
+      color: #a35a00;
+      font-weight: 800;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <h1>🚗 La mia Jeep Avenger</h1>
+    <div class="subtitle">Calcolo semplice per ricarica e viaggio Sassari → Cagliari</div>
+
+    <div class="card">
+      <label for="attuale">Batteria attuale (%)</label>
+      <input id="attuale" type="number" inputmode="decimal" value="67">
+
+      <label for="desiderata">Batteria desiderata (%)</label>
+      <input id="desiderata" type="number" inputmode="decimal" value="80">
+
+      <label for="prezzo">Prezzo energia €/kWh</label>
+      <input id="prezzo" type="number" inputmode="decimal" step="0.01" value="0.45">
+
+      <label for="potenza">Potenza ricarica kW</label>
+      <input id="potenza" type="number" inputmode="decimal" step="0.1" value="4">
+
+      <button id="calcola" type="button">Calcola ricarica</button>
+    </div>
+
+    <div class="card result" id="risultato">
+      Premi “Calcola ricarica”.
+    </div>
+
+    <div class="card note">
+      Batteria impostata: 54 kWh. Il tempo è una stima semplice e non considera rallentamenti finali della ricarica.
+    </div>
+  </div>
+
+<script>
+(function () {
+  function numero(id) {
+    var valore = document.getElementById(id).value;
+    valore = String(valore).replace(",", ".");
+    var n = parseFloat(valore);
+    if (isNaN(n)) return null;
+    return n;
+  }
+
+  function oreMinuti(ore) {
+    if (!isFinite(ore) || ore < 0) return "non calcolabile";
+    var h = Math.floor(ore);
+    var m = Math.round((ore - h) * 60);
+    if (m === 60) { h += 1; m = 0; }
+    return h + " h " + m + " min";
+  }
+
+  function calcola() {
+    var batteriaKwh = 54;
+    var attuale = numero("attuale");
+    var desiderata = numero("desiderata");
+    var prezzo = numero("prezzo");
+    var potenza = numero("potenza");
+    var box = document.getElementById("risultato");
+
+    if (attuale === null || desiderata === null || prezzo === null || potenza === null) {
+      box.innerHTML = "<span class='warn'>Controlla i numeri inseriti.</span>";
+      return;
+    }
+
+    if (attuale < 0 || attuale > 100 || desiderata < 0 || desiderata > 100) {
+      box.innerHTML = "<span class='warn'>Le percentuali devono stare tra 0 e 100.</span>";
+      return;
+    }
+
+    if (desiderata <= attuale) {
+      box.innerHTML = "<span class='ok'>Non devi caricare: la percentuale desiderata è già raggiunta.</span>";
+      return;
+    }
+
+    if (prezzo < 0 || potenza <= 0) {
+      box.innerHTML = "<span class='warn'>Prezzo e potenza non sono validi.</span>";
+      return;
+    }
+
+    var differenza = desiderata - attuale;
+    var kwh = batteriaKwh * differenza / 100;
+    var costo = kwh * prezzo;
+    var tempo = kwh / potenza;
+
+    var autonomiaStimata = desiderata * 3.4; 
+    var messaggioViaggio = autonomiaStimata >= 250
+      ? "<span class='ok'>Per Sassari → Cagliari sei abbastanza tranquilla, con guida prudente.</span>"
+      : "<span class='warn'>Per Sassari → Cagliari meglio partire con più carica o prevedere una sosta.</span>";
+
+    box.innerHTML =
+      "<div class='big'>" + kwh.toFixed(1) + " kWh da caricare</div>" +
+      "<p>Costo stimato: <b>€ " + costo.toFixed(2) + "</b></p>" +
+      "<p>Tempo stimato a " + potenza.toFixed(1) + " kW: <b>" + oreMinuti(tempo) + "</b></p>" +
+      "<p>Autonomia molto indicativa al " + desiderata.toFixed(0) + "%: <b>" + autonomiaStimata.toFixed(0) + " km</b></p>" +
+      "<p>" + messaggioViaggio + "</p>";
+  }
+
+  document.getElementById("calcola").addEventListener("click", calcola);
+  window.addEventListener("load", calcola);
+})();
+</script>
+</body>
+</html>
